@@ -1,0 +1,6 @@
+<div class="row justify-content-center">
+  <div *ngIf="isEmploy" class="alert alert-primary" role="alert">
+    No hay tareas en este momento, añade una tarea
+  </div>
+  <app-card-task *ngFor="let item of listTask" class="col-4" [task]="item"></app-card-task>
+</div>
