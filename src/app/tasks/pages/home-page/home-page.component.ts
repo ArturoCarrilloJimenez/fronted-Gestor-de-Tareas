@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { ListTaskComponent } from '../../components/list-task/list-task.component';
 import { Task } from '../../interfaces/task.interface';
-import { TaskService } from '../../services/task.service';
-import { AddTaskComponent } from '../../components/add-task/add-task.component';
+import { AddTaskComponent } from '../../components/form-task/form-task.component';
 import { CommonModule } from '@angular/common';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-home-page',
