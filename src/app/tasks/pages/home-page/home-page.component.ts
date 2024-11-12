@@ -16,7 +16,7 @@ export class HomePageComponent {
   public isGetTarea: boolean = true;
 
   constructor(private taskService: TaskService) {
-    this.taskService.searchTask();
+    this.taskService.searchAllTasks();
   }
 
   public get listTask(): Task[] {

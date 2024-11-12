@@ -8,13 +8,14 @@ import { InputBoxComponent } from '../../../shared/components/input-box/input-bo
 import { ErrorInterface } from '../../interfaces/error';
 
 @Component({
-  selector: 'app-form-task',
+  selector: 'task-form-task',
   standalone: true,
   imports: [FormsModule, InputBoxComponent, CommonModule],
   templateUrl: './form-task.component.html',
   styleUrl: './form-task.component.css',
 })
 
+// TODO Hacer genérico el form
 export class AddTaskComponent {
   @Output()
   public emitter: EventEmitter<boolean> = new EventEmitter()
@@ -31,18 +32,16 @@ export class AddTaskComponent {
     user_id: 'ca9ba32d-22f6-4b50-b304-b1b9def3c090',
   };
 
-  public set title(value: string) {
-    this.newTask.title = value;
-  }
-
-  public set description(value: string) {
-    this.newTask.description = value;
-  }
 
   addTask() {
+    if (this.newTask.title === '') {
+      this.error = {detail: 'Introduce un titulo'}
+      return
+    }
+
     this.taskService.addTask(this.newTask).subscribe({
       next: () => {
-        this.taskService.searchTask()
+        this.taskService.searchAllTasks()
         this.emitter.emit(true)
       },
       error: (error) => {

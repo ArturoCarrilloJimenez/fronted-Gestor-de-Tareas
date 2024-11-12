@@ -1,10 +1,11 @@
-<div class="card text-start shadow mb-3 border-0 h-100">
+<div class="card text-start shadow-sm mb-3 border-0 h-100">
   <div class="card-body">
     <h4 class="card-title fw-semibold mb-2">{{ task.title }}</h4>
     <p class="card-text text-muted mb-3">{{ task.description }}</p>
     <div class="d-flex gap-2 ms-auto">
-      <button class="btn btn-primary w-50">Edit</button>
+      <button class="btn btn-primary w-50" (click)="edit(task.id)">Edit</button>
       <button class="btn btn-outline-danger w-50">Delete</button>
+      <!-- TODO hacer la función de eliminar -->
     </div>
   </div>
 </div>

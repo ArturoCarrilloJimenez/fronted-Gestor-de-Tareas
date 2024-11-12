@@ -4,7 +4,7 @@ import { CardTaskComponent } from '../card-task/card-task.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-list-task',
+  selector: 'task-list-task',
   standalone: true,
   imports: [CardTaskComponent, CommonModule],
   templateUrl: './list-task.component.html',

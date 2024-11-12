@@ -4,8 +4,9 @@
     <i (click)="addTask()" class="bi bi-file-earmark-plus-fill fs-5" id="add-btn"></i>
   </div>
   <hr class="mt-0 mb-4">
-  <app-list-task  *ngIf="isGetTarea, else formTask" [listTask]="listTask"></app-list-task>
+  <task-list-task  *ngIf="isGetTarea, else formTask" [listTask]="listTask"></task-list-task>
+
   <ng-template #formTask>
-    <app-form-task (emitter)="isGetTarea = $event"></app-form-task>
+    <task-form-task (emitter)="isGetTarea = $event"></task-form-task>
   </ng-template>
 </div>

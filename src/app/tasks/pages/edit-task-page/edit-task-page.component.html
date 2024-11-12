@@ -1,0 +1,13 @@
+<div class="container pt-4 text-center">
+  <div class="mb-3 text-sm-start">
+    <h4 class="fw-bold mb-0">Tareas</h4>
+  </div>
+  <hr class="mt-0 mb-4">
+  <div class="row">
+    <task-card-task class="col-4" [task]="originTask!"></task-card-task>
+    <div class="col-8">
+      <!-- TODO hacer el form genérico para actualizarlo -->
+      <task-form-task ></task-form-task>
+    </div>
+  </div>
+</div>
