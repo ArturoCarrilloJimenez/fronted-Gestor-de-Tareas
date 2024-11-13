@@ -1,6 +1,17 @@
-<div class="card text-start shadow-sm mb-3 border-0 h-100">
+<div class="card text-start shadow mb-3 border-0 h-100" [ngClass]="{'opacity-50': task.completed}">
   <div class="card-body">
-    <h4 class="card-title fw-semibold mb-2">{{ task.title }}</h4>
+
+    <div class="container d-flex justify-content-between align-items-center">
+      <h4 class="card-title fw-semibold mb-2" [ngClass]="{'text-decoration-line-through': task.completed}">{{ task.title }}</h4>
+
+      <div style="cursor: pointer;" (click)="changeState()">
+        <i *ngIf="!task.completed; else notComplete" class="bi bi-bookmark-check-fill fs-4"></i>
+        <ng-template #notComplete>
+          <i class="bi bi-bookmark-x-fill fs-4"></i>
+        </ng-template>
+      </div>
+    </div>
+
     <p class="card-text text-muted mb-3">{{ task.description }}</p>
     <div class="d-flex gap-2 ms-auto">
       <button class="btn btn-primary w-50" (click)="edit(task.id)">Edit</button>

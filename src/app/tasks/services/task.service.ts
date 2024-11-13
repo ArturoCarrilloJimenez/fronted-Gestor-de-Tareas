@@ -8,7 +8,6 @@ import { AuthenticateService } from '../../interceptors/services/authenticate.se
   providedIn: 'root',
 })
 
-// TODO pasar jwt para poder hacer las consultas a la api
 export class TaskService {
   private URL: string = 'http://localhost:8000';
   private _taskList: Task[] = [];
@@ -40,14 +39,33 @@ export class TaskService {
     return this.authenticateService.verifyToken().pipe(
       switchMap((userId: string) => {
         // Realizo la consulta http con el id que emos obtenido anteriormente
-      return this.http.get<Task>(`${this.URL}/tasks/${userId}/${id}`);
-    }));
+        return this.http.get<Task>(`${this.URL}/tasks/${userId}/${id}`);
+      })
+    );
   }
 
   public addTask(task: Task): Observable<any> {
     return this.http.post(this.URL + '/tasks/add', task).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError(() => error.error || { detail: 'Error desconocido' });
+      })
+    );
+  }
+
+  public updateTask(task: Task) {
+    // Obtengo, el id del usuario
+    return this.authenticateService.verifyToken().pipe(
+      switchMap((userId: string) => {
+        // Realizo la consulta http con el id que emos obtenido anteriormente
+        return this.http
+          .put<Task>(`${this.URL}/tasks/update/${userId}/${task.id}`, task)
+          .pipe( // Obtengo el error y si no encuentra los detail muestra error desconocido
+            catchError((error: HttpErrorResponse) => {
+              return throwError(
+                () => error.error || { detail: 'Error desconocido' }
+              );
+            })
+          );
       })
     );
   }

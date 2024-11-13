@@ -6,8 +6,7 @@
   <div class="row">
     <task-card-task class="col-4" [task]="originTask!"></task-card-task>
     <div class="col-8">
-      <!-- TODO hacer el form genérico para actualizarlo -->
-      <task-form-task ></task-form-task>
+      <task-form-task [task]="originTask" ></task-form-task>
     </div>
   </div>
 </div>

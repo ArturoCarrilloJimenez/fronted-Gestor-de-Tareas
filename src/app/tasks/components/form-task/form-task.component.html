@@ -1,9 +1,24 @@
-<form (ngSubmit)="addTask()">
+<form (ngSubmit)="task ? updateTask() : addTask()">
   <div *ngIf="error" class="alert alert-danger" role="alert">{{ error.detail }}</div>
 
-  <shared-input-box [type]="'text'" [placeholder]="'Escribe aquí el titulo'" [title]="'Titulo'" (emitValue)="newTask.title=$event"></shared-input-box>
-  <shared-input-box [type]="'text'" [placeholder]="'Escribe aquí la descripción'" [title]="'Descripción'" (emitValue)="newTask.description=$event"></shared-input-box>
+  <div *ngIf="!task;else inputUpdate">
+    <shared-input-box [type]="'text'" [placeholder]="'Escribe aquí el titulo'" [title]="'Titulo'"
+      (emitValue)="newTask.title=$event"></shared-input-box>
+    <shared-input-box [type]="'text'" [placeholder]="'Escribe aquí la descripción'" [title]="'Descripción'"
+      (emitValue)="newTask.description=$event"></shared-input-box>
+  </div>
+
+  <ng-template #inputUpdate>
+    <shared-input-box [type]="'text'" [value]="task!.title" [placeholder]="'Escribe aquí el titulo'" [title]="'Titulo'"
+      (emitValue)="newTask.title=$event"></shared-input-box>
+    <shared-input-box [type]="'text'" [value]="task!.description" [placeholder]="'Escribe aquí la descripción'" [title]="'Descripción'"
+      (emitValue)="newTask.description=$event"></shared-input-box>
+  </ng-template>
+
   <div class="input-group mb-3">
-    <button type="submit" class="btn btn-outline-primary w-100">Añadir</button>
+    <button *ngIf="!task;else btnUpdate" type="submit" class="btn btn-outline-primary w-100">Añadir</button>
+    <ng-template #btnUpdate>
+      <button type="submit" class="btn btn-outline-primary w-100">Actualizar</button>
+    </ng-template>
   </div>
 </form>
