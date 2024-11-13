@@ -5,6 +5,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { TaskService } from './tasks/services/task.service';
 import { LoginServices } from './login/services/login.service';
 import { authInterceptor } from './interceptors/auth.interceptor';
+import { SweetalertService } from './shared/services/sweetalert.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +17,7 @@ export const appConfig: ApplicationConfig = {
       ])
     ),
     TaskService,
-    LoginServices
+    LoginServices,
+    SweetalertService
   ]
 };

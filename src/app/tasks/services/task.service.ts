@@ -7,7 +7,6 @@ import { AuthenticateService } from '../../interceptors/services/authenticate.se
 @Injectable({
   providedIn: 'root',
 })
-
 export class TaskService {
   private URL: string = 'http://localhost:8000';
   private _taskList: Task[] = [];
@@ -28,8 +27,13 @@ export class TaskService {
       const url = `${this.URL}/tasks/${userId}`;
 
       // Consulta de tareas
-      this.http.get<Task[]>(url).subscribe((resp) => {
-        this._taskList = resp;
+      this.http.get<Task[]>(url).subscribe({
+        next: (resp) => {
+          this._taskList = resp;
+        },
+        error: (error) => { // En caso de que ocurra un error devuelvo un array vació
+          this._taskList = []
+        }
       });
     });
   }
@@ -59,7 +63,8 @@ export class TaskService {
         // Realizo la consulta http con el id que emos obtenido anteriormente
         return this.http
           .put<Task>(`${this.URL}/tasks/update/${userId}/${task.id}`, task)
-          .pipe( // Obtengo el error y si no encuentra los detail muestra error desconocido
+          .pipe(
+            // Obtengo el error y si no encuentra los detail muestra error desconocido
             catchError((error: HttpErrorResponse) => {
               return throwError(
                 () => error.error || { detail: 'Error desconocido' }
@@ -68,5 +73,15 @@ export class TaskService {
           );
       })
     );
+  }
+
+  public deleteTask(id: string) {
+    this.authenticateService.verifyToken().subscribe((userId) => {
+      // Ruta de la api
+      const url = `${this.URL}/tasks/delete/${userId}/${id}`;
+
+      // Consulta de tareas
+      this.http.delete<Task>(url).subscribe((resp) => {});
+    });
   }
 }

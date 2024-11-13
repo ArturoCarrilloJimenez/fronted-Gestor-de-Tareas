@@ -14,9 +14,8 @@
 
     <p class="card-text text-muted mb-3">{{ task.description }}</p>
     <div class="d-flex gap-2 ms-auto">
-      <button class="btn btn-primary w-50" (click)="edit(task.id)">Edit</button>
-      <button class="btn btn-outline-danger w-50">Delete</button>
-      <!-- TODO hacer la función de eliminar -->
+      <button *ngIf="!editTask" class="btn btn-primary w-50" (click)="edit(task.id)">Edit</button>
+      <button class="btn btn-outline-danger w-50" [ngClass]="{'w-100': editTask}" (click)="deleteTask(task.id)">Delete</button>
     </div>
   </div>
 </div>
