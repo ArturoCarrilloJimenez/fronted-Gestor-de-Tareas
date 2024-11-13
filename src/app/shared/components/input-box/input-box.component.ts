@@ -1,25 +1,33 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'shared-input-box',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './input-box.component.html',
   styleUrl: './input-box.component.css'
 })
-export class InputBoxComponent {
-  @ViewChild('inputText')
-  term!: ElementRef<HTMLInputElement>;
-
+export class InputBoxComponent implements OnChanges {
   @Input() public title: string = '';
   @Input() public placeholder: string = '';
   @Input() public value: string = '';
+  @Input() public type: string = '';
+
+  public defaultValue: string = ''
 
   @Output()
   public emitValue: EventEmitter<string> = new EventEmitter()
 
-  onValue () {
-    this.emitValue.emit(this.term.nativeElement.value);
+  // Si cambia el valor se lo paso al valor del input y lo envió con el eventEmitter
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['value']) {
+      this.defaultValue = this.value
+    }
+    this.onValue()
   }
 
+  onValue () {
+    this.emitValue.emit(this.defaultValue);
+  }
 }

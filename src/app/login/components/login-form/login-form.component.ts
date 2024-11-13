@@ -29,11 +29,12 @@ export class LoginFormComponent {
     password: ''
   };
 
-  // TODO hacer el login para optener el jws
   loginUser() {
     if ((this.user.username === '') || (this.user.password === '')) {
       this.error = {detail: 'Algún campo esta vació'}
+      return
     }
+
     this.loginServices.login(this.user)
   }
 }

@@ -1,5 +1,5 @@
 <div class="input-group mb-3">
   <span class="input-group-text col-3" id="basic-addon1">{{ title }}</span>
-  <input type="text" (keyup)="onValue()" [value]="value" class="form-control" [placeholder]="placeholder" aria-label="input"
+  <input [type]="type"  (keyup)="onValue()" [(ngModel)]="defaultValue" class="form-control" [placeholder]="placeholder" aria-label="input"
     name="input" aria-describedby="basic-addon1" #inputText>
 </div>
