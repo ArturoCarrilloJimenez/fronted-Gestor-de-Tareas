@@ -1,0 +1,22 @@
+<form (ngSubmit)="registerUser()">
+  <div *ngIf="error" class="alert alert-danger" role="alert">{{ error.detail }}</div>
+
+  <shared-input-box [type]="'text'" [placeholder]="'Escribe aquí el nombre usuario'" [title]="'Username*'"
+    (emitValue)="user.username=$event"></shared-input-box>
+
+  <shared-input-box [type]="'text'" [placeholder]="'Escribe aquí tu nombre'" [title]="'Nombre'"
+    (emitValue)="user.name=$event"></shared-input-box>
+
+  <shared-input-box [type]="'email'" [placeholder]="'Escribe aquí el email'" [title]="'Email*'"
+    (emitValue)="user.email=$event"></shared-input-box>
+
+  <shared-input-box [type]="'password'" [placeholder]="'Escribe aquí la contraseña'" [title]="'Contraseña*'"
+    (emitValue)="user.password=$event"></shared-input-box>
+
+  <shared-input-box [type]="'password'" [placeholder]="'Escribe aquí la contraseña'" [title]="'Confirmar contraseña*'"
+    (emitValue)="confirmPassword=$event"></shared-input-box>
+
+  <div class="input-group mb-3">
+    <button type="submit" class="btn btn-outline-primary w-100">Regístrate</button>
+  </div>
+</form>

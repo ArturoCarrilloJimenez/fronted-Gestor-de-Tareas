@@ -47,6 +47,7 @@ export class AddTaskComponent implements OnChanges {
     user_id: 'ca9ba32d-22f6-4b50-b304-b1b9def3c090',
   };
 
+  // TODO hacer las validaciones y mostrar errores
   addTask() {
     if (this.newTask.title === '') {
       this.error = { detail: 'Introduce un titulo' };

@@ -4,7 +4,6 @@ import { User } from '../interfaces/user';
 import { Router } from '@angular/router';
 
 // TODO hacer servicio de login y registro
-// TODO hacer logout
 @Injectable({ providedIn: 'root' })
 export class LoginServices {
   private URL: string = 'http://localhost:8000';
@@ -17,5 +16,10 @@ export class LoginServices {
       localStorage.setItem('token', element)
       this.router.navigateByUrl('tasks')
     })
+  }
+
+  logout() {
+    localStorage.removeItem('token')
+    this.router.navigateByUrl('login')
   }
 }

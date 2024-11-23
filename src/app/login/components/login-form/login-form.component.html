@@ -1,6 +1,7 @@
 <form (ngSubmit)="loginUser()">
   <div *ngIf="error" class="alert alert-danger" role="alert">{{ error.detail }}</div>
 
+  <!-- TODO eliminar el valor del form para acceder -->
   <shared-input-box [type]="'text'" [value]="'prueba'" [placeholder]="'Escribe aquí el usuario'" [title]="'Usuario'" (emitValue)="user.username=$event"></shared-input-box>
   <shared-input-box [type]="'password'" [value]="'prueba'" [placeholder]="'Escribe aquí la contraseña'" [title]="'Contraseña'" (emitValue)="user.password=$event"></shared-input-box>
   <div class="input-group mb-3">

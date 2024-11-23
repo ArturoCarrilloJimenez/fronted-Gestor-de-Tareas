@@ -6,6 +6,9 @@
           [routerLinkActiveOptions]="{ exact: true }" aria-current="page">Tareas</a>
       </li>
     </ul>
-    <i routerLink="login" class="bi bi-person-circle text-light fs-5" id="login"></i>
+    <i *ngIf="!isLogin;else logoutTemplate" routerLink="login" class="bi bi-person-circle text-light fs-5" style="cursor: pointer;"></i>
+    <ng-template #logoutTemplate>
+      <i (click)="logout()" class="bi bi-person-fill-x text-light fs-5" style="cursor: pointer;"></i>
+    </ng-template>
   </div>
 </nav>

@@ -29,6 +29,7 @@ export class LoginFormComponent {
     password: ''
   };
 
+  // TODO hacer las validaciones y mostrar errores
   loginUser() {
     if ((this.user.username === '') || (this.user.password === '')) {
       this.error = {detail: 'Algún campo esta vació'}
