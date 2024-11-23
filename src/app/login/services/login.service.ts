@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
 import { Router } from '@angular/router';
+import { catchError, Observable, throwError } from 'rxjs';
 
 // TODO hacer servicio de login y registro
 @Injectable({ providedIn: 'root' })
@@ -13,13 +14,22 @@ export class LoginServices {
   login(user: User) {
     const url = `${this.URL}/login`;
     this.http.post<string>(url, user).subscribe((element) => {
-      localStorage.setItem('token', element)
-      this.router.navigateByUrl('tasks')
-    })
+      localStorage.setItem('token', element);
+      this.router.navigateByUrl('tasks');
+    });
   }
 
   logout() {
-    localStorage.removeItem('token')
-    this.router.navigateByUrl('login')
+    localStorage.removeItem('token');
+    this.router.navigateByUrl('login');
+  }
+
+  register(user: User): Observable<User> {
+    const url = `${this.URL}/users/add`;
+    return this.http.post<User>(url, user).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => error.error || { detail: 'Error desconocido' });
+      })
+    );
   }
 }

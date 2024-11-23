@@ -13,7 +13,7 @@ import { LoginServices } from '../../services/login.service';
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.css',
 })
-// TODO hacer login
+// TODO hacer registro
 export class RegisterFormComponent {
   constructor(private loginServices: LoginServices) {}
 
@@ -41,7 +41,14 @@ export class RegisterFormComponent {
         return
       }
 
-      console.log(this.user);
+      this.loginServices.register(this.user).subscribe({
+        next: () => {
+          this.loginServices.login(this.user)
+        },
+        error: (error) => {
+          this.error= error
+        }
+      })
 
   }
 }

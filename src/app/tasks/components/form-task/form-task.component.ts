@@ -44,7 +44,7 @@ export class AddTaskComponent implements OnChanges {
     title: '',
     description: '',
     completed: false,
-    user_id: 'ca9ba32d-22f6-4b50-b304-b1b9def3c090',
+    user_id: '',
   };
 
   // TODO hacer las validaciones y mostrar errores
@@ -73,7 +73,6 @@ export class AddTaskComponent implements OnChanges {
 
     this.taskService.updateTask(this.newTask).subscribe({
       next: () => {
-        this.taskService.updateTask(this.task!);
         this.router.navigateByUrl('tasks')
       },
       error: (error) => {
