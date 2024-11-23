@@ -13,7 +13,7 @@ import { LoginServices } from '../../services/login.service';
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.css',
 })
-// TODO hacer registro
+
 export class RegisterFormComponent {
   constructor(private loginServices: LoginServices) {}
 
@@ -29,7 +29,6 @@ export class RegisterFormComponent {
 
   public confirmPassword = ''
 
-  // TODO hacer las validaciones y mostrar errores
   registerUser() {
       if (this.user.username === '' || this.user.password === '' || this.user.email === '' || this.confirmPassword === '') {
         this.error = {detail: 'Algunos de los campos obligatorios están vacíos'}
@@ -43,7 +42,14 @@ export class RegisterFormComponent {
 
       this.loginServices.register(this.user).subscribe({
         next: () => {
-          this.loginServices.login(this.user)
+          this.loginServices.login(this.user).subscribe({
+            next: (element) => {
+              this.loginServices.saveToken(element)
+            },
+            error: (error) => {
+              this.error = error
+            }
+          })
         },
         error: (error) => {
           this.error= error

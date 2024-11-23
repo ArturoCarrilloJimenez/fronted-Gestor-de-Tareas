@@ -29,13 +29,19 @@ export class LoginFormComponent {
     password: ''
   };
 
-  // TODO hacer las validaciones y mostrar errores
   loginUser() {
     if ((this.user.username === '') || (this.user.password === '')) {
       this.error = {detail: 'Algún campo esta vació'}
       return
     }
 
-    this.loginServices.login(this.user)
+    this.loginServices.login(this.user).subscribe({
+      next: (element) => {
+        this.loginServices.saveToken(element)
+      },
+      error: (error) => {
+        this.error = error
+      }
+    })
   }
 }

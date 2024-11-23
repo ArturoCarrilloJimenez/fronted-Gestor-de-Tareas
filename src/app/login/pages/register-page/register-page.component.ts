@@ -10,7 +10,6 @@ import { RegisterFormComponent } from '../../components/register-form/register-f
   styleUrl: './register-page.component.css',
 })
 
-// TODO realizar registro
 export class RegisterPageComponent {
 
 }
