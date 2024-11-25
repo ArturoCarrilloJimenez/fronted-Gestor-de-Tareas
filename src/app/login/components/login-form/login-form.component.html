@@ -1,8 +1,10 @@
 <form (ngSubmit)="loginUser()">
   <div *ngIf="error" class="alert alert-danger" role="alert">{{ error.detail }}</div>
 
-  <shared-input-box [type]="'text'" [placeholder]="'Escribe aquí el usuario'" [title]="'Usuario'" (emitValue)="user.username=$event"></shared-input-box>
-  <shared-input-box [type]="'password'" [placeholder]="'Escribe aquí la contraseña'" [title]="'Contraseña'" (emitValue)="user.password=$event"></shared-input-box>
+  <shared-input-box [type]="'text'" [placeholder]="'Escribe aquí el usuario'" [title]="'Usuario'"
+    (emitValue)="user.username=$event" [error]="userNameError"></shared-input-box>
+  <shared-input-box [type]="'password'" [placeholder]="'Escribe aquí la contraseña'" [title]="'Contraseña'"
+    (emitValue)="user.password=$event" [error]="passwordError"></shared-input-box>
   <div class="input-group mb-3">
     <button type="submit" class="btn btn-outline-primary w-100">Iniciar sesión</button>
   </div>

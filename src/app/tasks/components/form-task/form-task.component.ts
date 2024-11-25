@@ -29,6 +29,16 @@ export class AddTaskComponent implements OnChanges {
 
   @Input() public task: Task | null = null;
 
+  public error: ErrorInterface | null = null;
+  public newTask: Task = {
+    id: '',
+    title: '',
+    description: '',
+    completed: false,
+    user_id: '',
+  };
+  public titleError = ''
+
   constructor(private taskService: TaskService, private router: Router) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -37,19 +47,9 @@ export class AddTaskComponent implements OnChanges {
     }
   }
 
-  public error: ErrorInterface | null = null;
-
-  public newTask: Task = {
-    id: '',
-    title: '',
-    description: '',
-    completed: false,
-    user_id: '',
-  };
-
   addTask() {
     if (this.newTask.title === '') {
-      this.error = { detail: 'Introduce un titulo' };
+      this.titleError = 'El titulo es un campo obligatorio, introduce un titulo'
       return;
     }
 
@@ -66,7 +66,7 @@ export class AddTaskComponent implements OnChanges {
 
   updateTask() {
     if (this.newTask.title === '') {
-      this.error = { detail: 'Introduce un titulo' };
+      this.titleError = 'El titulo es un campo obligatorio, introduce un titulo'
       return;
     }
 

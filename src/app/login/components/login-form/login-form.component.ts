@@ -9,7 +9,7 @@ import { LoginServices } from '../../services/login.service';
 @Component({
   selector: 'login-form',
   standalone: true,
-  imports: [FormsModule ,CommonModule, InputBoxComponent],
+  imports: [FormsModule, CommonModule, InputBoxComponent],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css',
 })
@@ -17,31 +17,57 @@ export class LoginFormComponent {
   @Output()
   public emitter: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private loginServices: LoginServices) {}
-
   public error: ErrorInterface | null = null;
-
+  public userNameError = '';
+  public passwordError = '';
   public user: User = {
     id: '',
     name: '',
     email: '',
     username: '',
-    password: ''
+    password: '',
   };
 
+  constructor(private loginServices: LoginServices) {}
+
   loginUser() {
-    if ((this.user.username === '') || (this.user.password === '')) {
-      this.error = {detail: 'Algún campo esta vació'}
-      return
+    this.limpiarErrores();
+
+    if (this.camposVaciaos()) {
+      return;
     }
 
     this.loginServices.login(this.user).subscribe({
       next: (element) => {
-        this.loginServices.saveToken(element)
+        this.loginServices.saveToken(element);
       },
       error: (error) => {
-        this.error = error
+        this.error = error;
+      },
+    });
+  }
+
+  limpiarErrores() {
+    this.error = null;
+    this.userNameError = '';
+    this.passwordError = '';
+  }
+
+  camposVaciaos() {
+    let bolean = false;
+
+    if (this.user.username === '' || this.user.password === '') {
+      if (this.user.username === '') {
+        this.userNameError =
+          'El campo username es obligatorio, introduce un nombre de usuario';
       }
-    })
+      if (this.user.password === '') {
+        this.passwordError =
+          'La contraseña es obligatorio, introduce una contraseña';
+      }
+      bolean = true;
+    }
+
+    return bolean;
   }
 }

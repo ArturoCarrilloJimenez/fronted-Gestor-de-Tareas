@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
 import { Router } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
-import { ErrorInterface } from '../../tasks/interfaces/error';
 
 @Injectable({ providedIn: 'root' })
 export class LoginServices {
@@ -11,6 +10,7 @@ export class LoginServices {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  // Hace una petición y espera un token de JWT
   login(user: User): Observable<string> {
     const url = `${this.URL}/login`;
     return this.http.post<string>(url, user).pipe(

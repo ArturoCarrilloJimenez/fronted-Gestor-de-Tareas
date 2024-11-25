@@ -9,52 +9,91 @@ import { LoginServices } from '../../services/login.service';
 @Component({
   selector: 'login-register-form',
   standalone: true,
-  imports: [FormsModule ,InputBoxComponent, CommonModule],
+  imports: [FormsModule, InputBoxComponent, CommonModule],
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.css',
 })
-
 export class RegisterFormComponent {
-  constructor(private loginServices: LoginServices) {}
-
   public error: ErrorInterface | null = null;
-
+  public userNameError = '';
+  public passwordError = '';
+  public password2Error = '';
+  public emailError = '';
   public user: User = {
     id: '',
     name: '',
     email: '',
     username: '',
-    password: ''
+    password: '',
   };
+  public confirmPassword = '';
 
-  public confirmPassword = ''
+  constructor(private loginServices: LoginServices) {}
 
   registerUser() {
-      if (this.user.username === '' || this.user.password === '' || this.user.email === '' || this.confirmPassword === '') {
-        this.error = {detail: 'Algunos de los campos obligatorios están vacíos'}
-        return
+    this.limpiarErrores();
+
+    if (this.camposVacíos()) {
+      return;
+    }
+
+    if (this.user.password !== this.confirmPassword) {
+      this.password2Error = 'No coinciden las contraseñas, comprueba que sean iguales'
+      return;
+    }
+
+    this.loginServices.register(this.user).subscribe({
+      next: () => {
+        this.loginServices.login(this.user).subscribe({
+          next: (element) => {
+            this.loginServices.saveToken(element);
+          },
+          error: (error) => {
+            this.error = error;
+          },
+        });
+      },
+      error: (error) => {
+        this.error = error;
+      },
+    });
+  }
+
+  limpiarErrores() {
+    this.error = null;
+    this.userNameError = '';
+    this.passwordError = '';
+    this.password2Error = '';
+    this.emailError = '';
+  }
+
+  camposVacíos() {
+    let bolean = false;
+
+    if (
+      this.user.username === '' ||
+      this.user.password === '' ||
+      this.user.email === '' ||
+      this.confirmPassword === ''
+    ) {
+      if (this.user.username === '') {
+        this.userNameError =
+          'El campo username es obligatorio, introduce un nombre de usuario';
       }
-
-      if (this.user.password !== this.confirmPassword) {
-        this.error = {detail: 'No coinciden las contraseñas'}
-        return
+      if (this.user.password === '') {
+        this.passwordError =
+          'La contraseña es obligatorio, introduce una contraseña';
       }
+      if (this.user.email === '') {
+        this.emailError = 'El campo email es obligatorio, introduce un email';
+      }
+      if (this.confirmPassword === '') {
+        this.password2Error =
+          'La contraseña es obligatorio, introduce una contraseña';
+      }
+      bolean = true;
+    }
 
-      this.loginServices.register(this.user).subscribe({
-        next: () => {
-          this.loginServices.login(this.user).subscribe({
-            next: (element) => {
-              this.loginServices.saveToken(element)
-            },
-            error: (error) => {
-              this.error = error
-            }
-          })
-        },
-        error: (error) => {
-          this.error= error
-        }
-      })
-
+    return bolean;
   }
 }

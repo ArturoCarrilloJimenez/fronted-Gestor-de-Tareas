@@ -1,6 +1,9 @@
 <div class="form-floating mb-3">
   <input [type]="type" [id]="title"  (keyup)="onValue()" [(ngModel)]="defaultValue" class="form-control" [placeholder]="placeholder" aria-label="input"
-  name="input" aria-describedby="basic-addon1" #inputText>
+  name="input" aria-describedby="basic-addon1" [ngClass]="{'is-invalid': error !== ''}" #inputText>
   <label [for]="title">{{ title }}</label>
+  <div class="invalid-feedback">
+    {{ error }}
+  </div>
 </div>
 

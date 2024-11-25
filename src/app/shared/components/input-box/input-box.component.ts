@@ -1,10 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'shared-input-box',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './input-box.component.html',
   styleUrl: './input-box.component.css'
 })
@@ -13,6 +14,7 @@ export class InputBoxComponent implements OnChanges {
   @Input() public placeholder: string = '';
   @Input() public value: string = '';
   @Input() public type: string = '';
+  @Input() public error: string = ''
 
   public defaultValue: string = ''
 
